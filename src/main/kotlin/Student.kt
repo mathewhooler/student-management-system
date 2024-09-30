@@ -1,25 +1,27 @@
-class Student(name: String, val studentId: String): Person(name), Assessee {
-  private val grades = mutableListOf<Int>()
+class Student(name: String, val studentId: String) : Person(name), Assessee {
+  private val grades = mutableMapOf<Subject, MutableList<Int>>()
 
-  fun addGrade(grade: Int){
-  grades.add(grade)
+  fun addGrade(subject: Subject, grade: Int) {
+    grades.computeIfAbsent(subject) { mutableListOf() }.add(grade)
   }
 
-  fun getGrade(): List<Int>{
-    return grades
+  fun getGrades(): List<Int> {
+    return grades.values.flatten()
   }
-
-
 
   override fun calculateAverageGrade(): Double {
-    val gradeAverage = grades.average()
-    return gradeAverage
+    val allGrades = getGrades()
+    return if (allGrades.isNotEmpty()) allGrades.average() else 0.0
   }
 
-  override fun displayDetails(){
+  fun displaydetails() {
     println("Student ID: $studentId")
     println("Grades: $grades")
-    println("Average Grade: ${calculateAverageGrade()}")
+    println("Student's Average Grade: ${calculateAverageGrade()}")
     super.displayDetails()
+  }
+
+  override fun equals(other: Any?): Boolean {
+    return (other as? Student)?.studentId == this.studentId
   }
 }
