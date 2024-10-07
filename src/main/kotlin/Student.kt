@@ -1,4 +1,4 @@
-class Student(name: String, val studentId: String) : Person(name), Assessee {
+class Student(name: String) : Person(name), Assessee {
   private val grades = mutableMapOf<Subject, MutableList<Int>>()
 
   fun addGrade(subject: Subject, grade: Int) {
@@ -14,14 +14,14 @@ class Student(name: String, val studentId: String) : Person(name), Assessee {
     return if (allGrades.isNotEmpty()) allGrades.average() else 0.0
   }
 
-  fun displaydetails() {
-    println("Student ID: $studentId")
+  override fun displayDetails() {
+    println("Student Name: ${this.personName}")
     println("Grades: $grades")
     println("Student's Average Grade: ${calculateAverageGrade()}")
     super.displayDetails()
   }
 
-  override fun equals(other: Any?): Boolean {
-    return (other as? Student)?.studentId == this.studentId
+  override fun getGrade(subject: Subject): Int {
+    TODO("Not yet implemented")
   }
 }
