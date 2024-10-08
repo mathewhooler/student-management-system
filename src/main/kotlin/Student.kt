@@ -1,27 +1,26 @@
-class Student(name: String) : Person(name), Assessee {
+class Student(name: String) : Person(name) {
   private val grades = mutableMapOf<Subject, MutableList<Int>>()
 
   fun addGrade(subject: Subject, grade: Int) {
     grades.computeIfAbsent(subject) { mutableListOf() }.add(grade)
   }
 
-  fun getGrades(): List<Int> {
-    return grades.values.flatten()
+  fun getGrades(subject: Subject): List<Int> {
+    return grades[subject] ?: emptyList()
   }
 
-  override fun calculateAverageGrade(): Double {
-    val allGrades = getGrades()
+  fun calculateAverageGrade(subject: Subject): Double {
+    val allGrades = getGrades(subject)
     return if (allGrades.isNotEmpty()) allGrades.average() else 0.0
   }
 
   override fun displayDetails() {
     println("Student Name: ${this.personName}")
     println("Grades: $grades")
-    println("Student's Average Grade: ${calculateAverageGrade()}")
-    super.displayDetails()
-  }
+    Subject.values().forEach { subject ->
+      println("Average Grade in ${subject.name}: ${calculateAverageGrade(subject)}")
+      super.displayDetails()
+    }
 
-  override fun getGrade(subject: Subject): Int {
-    TODO("Not yet implemented")
   }
 }

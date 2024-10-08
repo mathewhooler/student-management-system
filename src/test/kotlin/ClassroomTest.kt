@@ -19,7 +19,7 @@ class ClassroomTest {
     )
 
     for ((name, grade) in studentsWithGrades) {
-      val student = Student(name, name.length.toString())
+      val student = Student(name)
       student.addGrade(Subject.MATHS, grade)
       classRoom.addStudent(student)
     }
@@ -42,7 +42,7 @@ class ClassroomTest {
   @Test
   fun testCalculateAverageGrade() {
     val expectedAverage = (99 + 81 + 96 + 55 + 68) / 5.0
-    val actualAverage = classRoom.calculateAverageGrade()
+    val actualAverage = classRoom.calculateAverageGrade(Subject.MATHS)
     assertEquals(expectedAverage, actualAverage)
   }
 }

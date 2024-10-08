@@ -1,6 +1,6 @@
 interface Assessee {
   val students: Set<Student>
-  fun calculateAverageGrade(): Double
+  fun calculateAverageGrade(subject: Subject): Double
   fun displayDetails()
-  abstract fun getGrade(subject: Subject): Int
+  fun getGrade(student: Student, subject: Subject): Int?
 }
